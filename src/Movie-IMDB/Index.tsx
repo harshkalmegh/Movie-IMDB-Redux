@@ -1,22 +1,46 @@
-import { connect } from "react-redux";
-import { FETCH_MOVIES } from "./Action";
-import Homepage from "./Homepage";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { FetchMovies, FETCH_MOVIES } from "./Action";
+import MovieCard from "./MovieCard";
+import watchFetchMovie from "./saga";
 
-const dispatch = (dispatch: any) => {
-  console.log("dispatch : ", dispatch);
-  return {
-    FETCH_MOVIES: () => {
-      dispatch({ type: FETCH_MOVIES });
-    },
+function Index() {
+  const [name, setName] = useState("");
+  const [movie, setMovie] = useState<any>([]);
+
+  const _handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    setName(value);
   };
-};
 
-const state = (state: any) => {
-  console.log("State : ", state);
+  const myState = useSelector((state: any) => state.Fetch_Movie);
+  const dispatch = useDispatch();
+  const { movies, totalRecords } = myState.response;
+  console.log(movies);
 
-  return {
-    counter: state.calculateReducer,
-  };
-};
+  return (
+    <>
+      <div className="input-btn-container">
+        <input
+          className="input-box"
+          type="text"
+          placeholder="Enter Movie Name"
+          value={name}
+          onChange={_handleInputChange}
+        />
+        <button
+          className="btn"
+          type="submit"
+          onClick={() => {
+            dispatch(FetchMovies(name));
+          }}
+        >
+          Search
+        </button>
+      </div>
+      <MovieCard data={movie} />
+    </>
+  );
+}
 
-export default connect(state, dispatch)(Homepage);
+export default Index;

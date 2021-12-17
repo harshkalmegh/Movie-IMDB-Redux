@@ -1,5 +1,5 @@
 import axios from 'axios';
-export const GetRequest = async (url: string) => {
+export const GetRequest = async (url: string):Promise<any> => {
     try {
         const apiResponse = await axios.get(url);
         console.log({ apiResponse });

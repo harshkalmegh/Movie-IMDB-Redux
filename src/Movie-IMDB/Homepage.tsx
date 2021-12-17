@@ -24,18 +24,14 @@ function Homepage() {
     setMovie(response.Search);
   };
 
-  
-
-  const _handlePagePrevious =  () => {
+  const _handlePagePrevious = () => {
     if (pageNum > 1) {
       setPageNum(pageNum - 1);
     }
     _handleSearchDetail();
-    
   };
 
-  const _handlePageNext =  () => {
-    
+  const _handlePageNext = () => {
     setPageNum(pageNum + 1);
     _handleSearchDetail();
   };

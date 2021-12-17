@@ -1,17 +1,23 @@
-import { FETCH_MOVIES } from "./Action";
+import { FETCH_MOVIES, FETCH_MOVIES_FAILED, FETCH_MOVIES_SUCCESS } from "./Action";
 
-
-const InitialValue = {
-  callApi:0,
+const initialState = {
+  isFetching: false,
+  response: {
+    movies: null,
+    totalRecords: null,
+  },
 };
 
-const Fetch_Movie = (state = InitialValue, action: any) => {
-    console.log("State and action : ", state, action);
+const Fetch_Movie = (state = initialState, action:any) => {
   switch (action.type) {
     case FETCH_MOVIES:
-      return { ...state, count: state.callApi + 1 };
+      return { ...state, isFetching: true };
+    case FETCH_MOVIES_SUCCESS:
+      return { ...state, isFetching: false, response: action.results };
+    case FETCH_MOVIES_FAILED:
+      return { ...state };
     default:
-      return state;
+      return { ...state };
   }
 };
 
