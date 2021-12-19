@@ -3,7 +3,7 @@ export const FETCH_MOVIES_SUCCESS = "FETCH_MOVIES_SUCCESS";
 export const FETCH_MOVIES_FAILED = "FETCH_MOVIES_FAILED";
 
 export const FetchMovies = (params: any) => {
-  return { type: FETCH_MOVIES, payload: params };
+  return { type: FETCH_MOVIES, search: params };
 };
 
 export const FetchMoviesSuccess = (results: any) => {
