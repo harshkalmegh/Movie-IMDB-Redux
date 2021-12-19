@@ -5,12 +5,16 @@ import { GetRequest } from "./Utilities/Network/Index";
  function* FetchMovies(action: any):any {
   try {
     // Prepare query
-    const { search } = action.params;
-    const URL = `http://www.omdbapi.com/?apikey=288a710d&s=${search}&page=1`;
+    const { payload } = action;
+    console.log("LN9",payload);
+    
+    const URL = `http://www.omdbapi.com/?apikey=288a710d&s=${payload}`;
 
     // Dispatch API request
     const apiResponse = yield GetRequest(URL);
-    
+    const { Search } = apiResponse
+    console.log(Search);
+  
 
     // Handle validation of response
     if (!apiResponse || Object.keys(apiResponse).length === 0) {
@@ -18,14 +22,9 @@ import { GetRequest } from "./Utilities/Network/Index";
       return;
     }
 
-    // Format the data
-    const { Search, totalResults } = apiResponse;
-    const response = {
-      movies: Search,
-      totalRecords: totalResults,
-    };
+    
 
-    yield put(FetchMoviesSuccess(response));
+    yield put(FetchMoviesSuccess(Search));
     return;
 
     // Prepare Query

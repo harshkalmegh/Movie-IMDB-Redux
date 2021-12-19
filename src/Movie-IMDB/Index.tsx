@@ -1,22 +1,19 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FetchMovies, FETCH_MOVIES } from "./Action";
-import MovieCard from "./MovieCard";
-import watchFetchMovie from "./saga";
+import { FetchMovies } from "./Action";
+import "./Homepage.css";
 
 function Index() {
   const [name, setName] = useState("");
-  const [movie, setMovie] = useState<any>([]);
 
   const _handleInputChange = (e: any) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
     setName(value);
   };
 
-  const myState = useSelector((state: any) => state.Fetch_Movie);
+  const Movies = useSelector((state: any) => state.Fetch_Movie);
   const dispatch = useDispatch();
-  const { movies, totalRecords } = myState.response;
-  console.log(movies);
+  const { response } = Movies;
 
   return (
     <>
@@ -38,7 +35,16 @@ function Index() {
           Search
         </button>
       </div>
-      <MovieCard data={movie} />
+      <div className="container">
+        {response.map((item: any) => {
+          return (
+            <div key={item.imdbID} className="card-container">
+              <img src={item.Poster} width="150px" height="150px" alt="" />
+              <p>Title : {item.Title}</p>
+            </div>
+          );
+        })}
+      </div>
     </>
   );
 }
